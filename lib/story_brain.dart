@@ -41,8 +41,6 @@ class StoryBrain {
     2: StoryTransition(5, 4),
   };
 
-//TODO: Step 23 - Use the storyNumber property inside getStory(), getChoice1() and getChoice2() so that it gets the updated story and choices rather than always just the first (0th) one.
-
   String getStory() {
     return _currentStory().storyTitle;
   }
@@ -56,8 +54,6 @@ class StoryBrain {
   }
 
   Story _currentStory() => _storyData[_storyNumber];
-
-//TODO: Step 25 - Change the storyNumber property into a private property so that only story_brain.dart has access to it. You can do this by right clicking on the name (storyNumber) and selecting Refactor -> Rename to make the change across all the places where it's used.
 
   void nextStory(int choiceNumber) {
     StoryTransition transition = _storyPlan[_storyNumber];
@@ -76,7 +72,7 @@ class StoryBrain {
     _storyNumber = 0;
   }
 
-//TODO: Step 27 - Create a method called buttonShouldBeVisible() which checks to see if storyNumber is 0 or 1 or 2 (when both buttons should show choices) and return true if that is the case, else it should return false.
+  bool buttonShouldBeVisible() => _storyNumber < 3;
 }
 
 class StoryTransition {
