@@ -35,6 +35,12 @@ class StoryBrain {
         choice2: '')
   ];
 
+  Map<int, StoryTransition> _storyPlan = {
+    0: StoryTransition(2, 1),
+    1: StoryTransition(2, 3),
+    2: StoryTransition(5, 4),
+  };
+
 //TODO: Step 23 - Use the storyNumber property inside getStory(), getChoice1() and getChoice2() so that it gets the updated story and choices rather than always just the first (0th) one.
 
   String getStory() {
@@ -53,13 +59,29 @@ class StoryBrain {
 
 //TODO: Step 25 - Change the storyNumber property into a private property so that only story_brain.dart has access to it. You can do this by right clicking on the name (storyNumber) and selecting Refactor -> Rename to make the change across all the places where it's used.
 
-  void nextStory(int choiceNumber) {}
+  void nextStory(int choiceNumber) {
+    StoryTransition transition = _storyPlan[_storyNumber];
+    if (transition == null) {
+      _restart();
+    } else {
+      if (choiceNumber == 1) {
+        _storyNumber = transition.transition1;
+      } else if (choiceNumber == 2) {
+        _storyNumber = transition.transition2;
+      }
+    }
+  }
 
-//TODO: Step 20 - Download the story plan here: https://drive.google.com/uc?export=download&id=1KU6EghkO9Hf2hRM0756xFHgNaZyGCou3
-
-//TODO: Step 21 - Using the story plan, update nextStory() to change the storyNumber depending on the choice made by the user. e.g. if choiceNumber was equal to 1 and the storyNumber is 0, the storyNumber should become 2.
-
-//TODO: Step 22 - In nextStory() if the storyNumber is equal to 3 or 4 or 5, that means it's the end of the game and it should call a method called restart() that resets the storyNumber to 0.
+  void _restart() {
+    _storyNumber = 0;
+  }
 
 //TODO: Step 27 - Create a method called buttonShouldBeVisible() which checks to see if storyNumber is 0 or 1 or 2 (when both buttons should show choices) and return true if that is the case, else it should return false.
+}
+
+class StoryTransition {
+  int transition1;
+  int transition2;
+
+  StoryTransition(this.transition1, this.transition2);
 }
